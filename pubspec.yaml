@@ -45,7 +45,16 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
    - images/logo.png
+   - images/logo1.png
    - images/wallpaper.jpg
+   - images/bluewall.jpg
+   - images/morino.png
+   - images/view.jpg
+   - images/mo.jpg
+   - images/mo1.jpg
+   - images/mo2.jpg
+   - images/mo3.jpg
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -59,9 +68,9 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: YeonSung
+    - family: BowlbyOneSC
       fonts:
-        - asset: fonts/YeonSung-Regular.ttf
+        - asset: fonts/BowlbyOneSC-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

@@ -37,7 +37,7 @@ class _HomeState extends State<Home> {
    
         if ((user.isEmpty)||(password.isEmpty)) {
           // Have space
-          numaldialog(context, 'ข้อมูลถุกต้อง', 'กรุณากรอกข้อมูล');
+          manualdialog(context, 'ข้อมูลถุกต้อง', 'กรุณากรอกข้อมูล');
           
           // numaldialog
         } else {
@@ -131,20 +131,21 @@ class _HomeState extends State<Home> {
 
   Widget showLogo() {
     return Container(
-      width: 120.0,
+      width: 100.0,
       height: 100.0,
-      child: Image.asset('images/logo.png'),
+      child: Image.asset('images/logo1.png'),
     );
   }
 
   Widget showAppName() {
     return Text(
-      'Film LAF',
+      // 'Living And Facilities',
+      'Morino Hotel',
       style: TextStyle(
         fontSize: MyStyle().h1,
         fontWeight: FontWeight.bold,
         fontStyle: FontStyle.italic,
-        color: MyStyle().textColor,
+        color: Colors.white,
         fontFamily: MyStyle().nameFont,
       ),
     );
@@ -157,8 +158,8 @@ class _HomeState extends State<Home> {
         child: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('images/wallpaper.jpg'),
-              fit: BoxFit.cover,
+              image: AssetImage('images/mo3.jpg'),
+              fit: BoxFit.fitHeight,
             ),
           ),
           child: Center(
