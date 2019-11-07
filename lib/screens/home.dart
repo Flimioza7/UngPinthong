@@ -1,5 +1,8 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:ungpinthong/screens/register.dart';
+import 'package:ungpinthong/utility/my_alert.dart';
 import 'package:ungpinthong/utility/my_style.dart';
 
 class Home extends StatefulWidget {
@@ -9,6 +12,8 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   // Field
+  final formkey = GlobalKey<FormState>();
+  String user = password;
 
   // Method
 
@@ -21,10 +26,28 @@ class _HomeState extends State<Home> {
           'Sign In',
           style: MyStyle().myWhiteTextStyle,
         ),
-        onPressed: () {},
+        onPressed: () {
+          formkey.currentState.save(); //get data formkey 
+          print('user=$user,password = $password');
+          checkauthan();
+        },
       ),
     );
   }
+
+  Future<void> checkauthan()async{   //ตรวจสอบช่องว่าง
+   
+        if ((user.isEmpty)||(password.isEmpty)) {
+          // Have space
+          numaldialog(context, 'ข้อมูลถุกต้อง', 'กรุณากรอกข้อมูล');
+          
+          // numaldialog
+        } else {
+          // no space
+        }
+
+  }
+
 
   Widget signUpButton() {
     return Expanded(
@@ -72,14 +95,18 @@ class _HomeState extends State<Home> {
         style: TextStyle(color: Colors.white),
         decoration: InputDecoration(
           focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(
-            color: MyStyle().textColor,
-          )),
+            borderSide: BorderSide(
+              color: MyStyle().textColor,
+            ),
+          ),
           enabledBorder:
               UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
           labelText: 'User :',
           labelStyle: TextStyle(color: Colors.white),
         ),
+        onSaved: (value) {
+          user = value.trim();
+        },
       ),
     );
   }
@@ -97,7 +124,9 @@ class _HomeState extends State<Home> {
               UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
           labelText: 'Password :',
           labelStyle: TextStyle(color: Colors.white),
-        ),
+        ),onSaved: (value){
+        password = value.trim();
+        },
       ),
     );
   }
@@ -112,7 +141,7 @@ class _HomeState extends State<Home> {
 
   Widget showAppName() {
     return Text(
-      'Ung Pinthong',
+      'Film LAF',
       style: TextStyle(
         fontSize: MyStyle().h1,
         fontWeight: FontWeight.bold,
@@ -138,18 +167,21 @@ class _HomeState extends State<Home> {
             child: Container(
               padding: MyStyle().myPadding,
               color: Color.fromARGB(100, 0, 0, 0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  showLogo(),
-                  showAppName(),
-                  userText(),
-                  passwordText(),
-                  SizedBox(
-                    height: 8.0,
-                  ),
-                  showButton(),
-                ],
+              child: Form(
+                key: formkey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    showLogo(),
+                    showAppName(),
+                    userText(),
+                    passwordText(),
+                    SizedBox(
+                      height: 8.0,
+                    ),
+                    showButton(),
+                  ],
+                ),
               ),
             ),
           ),
