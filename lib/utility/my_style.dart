@@ -7,7 +7,7 @@ class MyStyle {
   String nameFont = 'YeonSung';
   String nameApp = 'Ung Pinthong';
 
-  EdgeInsetsGeometry myPadding = EdgeInsets.all(20.0);
+  EdgeInsetsGeometry myPadding = EdgeInsets.all(16.0);
 
   TextStyle myWhiteTextStyle = TextStyle(color: Colors.white);
   TextStyle myTextStyleH2 = TextStyle(

@@ -40,8 +40,10 @@ class _HomeState extends State<Home> {
 
           // Create Route Arrow Back
           MaterialPageRoute materialPageRoute =
-              MaterialPageRoute(builder: (BuildContext context) {return Register();});
-              Navigator.of(context).push(materialPageRoute);
+              MaterialPageRoute(builder: (BuildContext context) {
+            return Register();
+          });
+          Navigator.of(context).push(materialPageRoute);
         },
       ),
     );
@@ -67,7 +69,17 @@ class _HomeState extends State<Home> {
     return Container(
       width: 250.0,
       child: TextFormField(
-        decoration: InputDecoration(labelText: 'User :'),
+        style: TextStyle(color: Colors.white),
+        decoration: InputDecoration(
+          focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(
+            color: MyStyle().textColor,
+          )),
+          enabledBorder:
+              UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+          labelText: 'User :',
+          labelStyle: TextStyle(color: Colors.white),
+        ),
       ),
     );
   }
@@ -76,8 +88,16 @@ class _HomeState extends State<Home> {
     return Container(
       width: 250.0,
       child: TextFormField(
+        style: TextStyle(color: Colors.white),
         obscureText: true,
-        decoration: InputDecoration(labelText: 'Password :'),
+        decoration: InputDecoration(
+          focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: MyStyle().textColor)),
+          enabledBorder:
+              UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+          labelText: 'Password :',
+          labelStyle: TextStyle(color: Colors.white),
+        ),
       ),
     );
   }
@@ -85,7 +105,7 @@ class _HomeState extends State<Home> {
   Widget showLogo() {
     return Container(
       width: 120.0,
-      height: 120.0,
+      height: 100.0,
       child: Image.asset('images/logo.png'),
     );
   }
@@ -117,7 +137,7 @@ class _HomeState extends State<Home> {
           child: Center(
             child: Container(
               padding: MyStyle().myPadding,
-              color: Color.fromARGB(50, 0, 0, 0),
+              color: Color.fromARGB(100, 0, 0, 0),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
