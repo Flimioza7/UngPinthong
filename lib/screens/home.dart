@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:ungpinthong/screens/register.dart';
 import 'package:ungpinthong/utility/my_alert.dart';
