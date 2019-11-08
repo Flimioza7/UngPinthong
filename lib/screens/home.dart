@@ -22,23 +22,21 @@ class _HomeState extends State<Home> {
 
   // Method
   @override
-  void initState(){
-      super.initState();
-      checkinternet();
+  void initState() {
+    super.initState();
+    checkinternet();
   }
-  Future<void> checkinternet()async{
-   try {
-     
-     var result = await InternetAddress.lookup('google.com');
-     //isNotEmpty =ต้องไม่ว่าง
-    if ((result.isNotEmpty)&&(result[0].rawAddress.isNotEmpty)) {
-      print('internet Connect Success');
+
+  Future<void> checkinternet() async {
+    try {
+      var result = await InternetAddress.lookup('google.com');
+      //isNotEmpty =ต้องไม่ว่าง
+      if ((result.isNotEmpty) && (result[0].rawAddress.isNotEmpty)) {
+        print('internet Connect Success');
+      }
+    } catch (e) {
+      normaldialog(context, 'internet Fail', 'Please Check Interneg');
     }
-
-   } catch (e) {
-     normaldialog(context, 'internet Fail', 'Please Check Interneg');
-   }
-
   }
 
   Widget signInButton() {
@@ -86,13 +84,22 @@ class _HomeState extends State<Home> {
 
           // Check password
           if (password == usermodel.password) {
-            
             // Move To Service
-          MaterialPageRoute materialPageRoute = MaterialPageRoute(builder: (BuildContext context){return Myservice();});
-          Navigator.of(context).pushAndRemoveUntil(materialPageRoute, (Route<dynamic> route){return false;});
-
+            MaterialPageRoute materialPageRoute = MaterialPageRoute(
+              builder: (BuildContext context) {
+                return Myservice(
+                  usermodel: usermodel,//ส่งค่าไป myservice
+                );
+              },
+            );
+            Navigator.of(context).pushAndRemoveUntil(
+              materialPageRoute,
+              (Route<dynamic> route) {
+                return false;
+              },
+            );
           } else {
-          normaldialog(context, 'Password Fail', 'plesse try agen ');
+            normaldialog(context, 'Password Fail', 'plesse try agen ');
           }
         }
       }
@@ -103,7 +110,7 @@ class _HomeState extends State<Home> {
     return Expanded(
       child: OutlineButton(
         shape: MyStyle().curveButton,
-        borderSide: BorderSide(color:Colors.lightBlueAccent),
+        borderSide: BorderSide(color: Colors.lightBlueAccent),
         child: Text(
           'Sign Up',
           style: TextStyle(color: Colors.white),
@@ -170,7 +177,9 @@ class _HomeState extends State<Home> {
         obscureText: true,
         decoration: InputDecoration(
           focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.lightBlue,)),
+              borderSide: BorderSide(
+            color: Colors.lightBlue,
+          )),
           enabledBorder:
               UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
           labelText: 'Password :',

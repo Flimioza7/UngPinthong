@@ -154,6 +154,7 @@ print('resule=$result');
 
   if (result.toString()=='true') {
     Navigator.of(context).pop();
+    // normaldialog(context, 'แจ้งเตือน', 'การลงทะเบียนสำเร็จ');
   } else {
     
   }
