@@ -1,3 +1,6 @@
+
+
+import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:ungpinthong/utility/my_style.dart';
 
@@ -6,10 +9,16 @@ class Page2 extends StatefulWidget {
   _Page2State createState() => _Page2State();
 }
 
+
+class _Page2State extends State<Page2> {
+
 //field
 String codestring = '';
 
 //method
+
+
+
 Widget readQRbudton() {
   return Column(
     mainAxisAlignment: MainAxisAlignment.end,
@@ -17,16 +26,32 @@ Widget readQRbudton() {
       Row(
         children: <Widget>[
           Expanded(
-                      child: RaisedButton.icon(
+            child: RaisedButton.icon(
               icon: Icon(Icons.photo_camera),
               label: Text('Read QR Code'),
-              onPressed: () {},
+              onPressed: () {
+                readQRthread();
+              },
             ),
           ),
         ],
       ),
     ],
   );
+}
+
+Future<void> readQRthread()async{
+try {
+  String readedQR = await BarcodeScanner.scan();
+  if (readedQR != null) {
+    setState(() {
+     codestring=readedQR; 
+    });
+  }
+  
+} catch (e) {
+}
+
 }
 
 Widget codereaded() {
@@ -50,7 +75,9 @@ Widget headtitel() {
   );
 }
 
-class _Page2State extends State<Page2> {
+
+
+
   @override
   Widget build(BuildContext context) {
     return Container(
