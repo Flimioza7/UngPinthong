@@ -1,4 +1,10 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:ungpinthong/models/user_model.dart';
+import 'package:ungpinthong/screens/my_service.dart';
 import 'package:ungpinthong/screens/register.dart';
 import 'package:ungpinthong/utility/my_alert.dart';
 import 'package:ungpinthong/utility/my_style.dart';
@@ -12,20 +18,40 @@ class _HomeState extends State<Home> {
   // Field
   final formkey = GlobalKey<FormState>();
   String user = password;
+  Usermodel usermodel;
 
   // Method
+  @override
+  void initState(){
+      super.initState();
+      checkinternet();
+  }
+  Future<void> checkinternet()async{
+   try {
+     
+     var result = await InternetAddress.lookup('google.com');
+     //isNotEmpty =ต้องไม่ว่าง
+    if ((result.isNotEmpty)&&(result[0].rawAddress.isNotEmpty)) {
+      print('internet Connect Success');
+    }
+
+   } catch (e) {
+     normaldialog(context, 'internet Fail', 'Please Check Interneg');
+   }
+
+  }
 
   Widget signInButton() {
     return Expanded(
       child: RaisedButton(
         shape: MyStyle().curveButton,
-        color: MyStyle().textColor,
+        color: Colors.lightBlue,
         child: Text(
           'Sign In',
           style: MyStyle().myWhiteTextStyle,
         ),
         onPressed: () {
-          formkey.currentState.save(); //get data formkey 
+          formkey.currentState.save(); //get data formkey
           print('user=$user,password = $password');
           checkauthan();
         },
@@ -33,28 +59,54 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Future<void> checkauthan()async{   //ตรวจสอบช่องว่าง
-   
-        if ((user.isEmpty)||(password.isEmpty)) {
-          // Have space
-          manualdialog(context, 'ข้อมูลถุกต้อง', 'กรุณากรอกข้อมูล');
-          
-          // numaldialog
-        } else {
-          // no space
+  Future<void> checkauthan() async {
+    //ตรวจสอบช่องว่าง
+
+    if ((user.isEmpty) || (password.isEmpty)) {
+      // Have space
+      normaldialog(context, 'ข้อมูลถุกต้อง', 'กรุณากรอกข้อมูล');
+    } else {
+      // no space get data
+      // print('work');
+      String url =
+          'https://www.androidthai.in.th/pint/getUserWhereUserfilm.php?isAdd=true&User=$user';
+      Response response = await get(url);
+      var result = json.decode(response.body);
+      print('resulr=$result');
+      if (result.toString() == 'null') {
+        normaldialog(
+            context, 'User fail', 'No $user in database'); //ดึงdaialog มาโชว์
+      } else {
+        for (var map in result) {
+          print('map = $map');
+          usermodel = Usermodel.fromAPI(map);
+
+          // print('password= $password');
+          // print('true password = ${usermodel.password}');
+
+          // Check password
+          if (password == usermodel.password) {
+            
+            // Move To Service
+          MaterialPageRoute materialPageRoute = MaterialPageRoute(builder: (BuildContext context){return Myservice();});
+          Navigator.of(context).pushAndRemoveUntil(materialPageRoute, (Route<dynamic> route){return false;});
+
+          } else {
+          normaldialog(context, 'Password Fail', 'plesse try agen ');
+          }
         }
-
+      }
+    } //if
   }
-
 
   Widget signUpButton() {
     return Expanded(
       child: OutlineButton(
         shape: MyStyle().curveButton,
-        borderSide: BorderSide(color: MyStyle().textColor),
+        borderSide: BorderSide(color:Colors.lightBlueAccent),
         child: Text(
           'Sign Up',
-          style: TextStyle(color: MyStyle().textColor),
+          style: TextStyle(color: Colors.white),
         ),
         onPressed: () {
           print('You Click SignUp');
@@ -90,11 +142,12 @@ class _HomeState extends State<Home> {
     return Container(
       width: 250.0,
       child: TextFormField(
+        keyboardType: TextInputType.emailAddress,
         style: TextStyle(color: Colors.white),
         decoration: InputDecoration(
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(
-              color: MyStyle().textColor,
+              color: Colors.lightBlue,
             ),
           ),
           enabledBorder:
@@ -117,13 +170,14 @@ class _HomeState extends State<Home> {
         obscureText: true,
         decoration: InputDecoration(
           focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: MyStyle().textColor)),
+              borderSide: BorderSide(color: Colors.lightBlue,)),
           enabledBorder:
               UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
           labelText: 'Password :',
           labelStyle: TextStyle(color: Colors.white),
-        ),onSaved: (value){
-        password = value.trim();
+        ),
+        onSaved: (value) {
+          password = value.trim();
         },
       ),
     );

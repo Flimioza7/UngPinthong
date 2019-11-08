@@ -27,7 +27,7 @@ Widget okbutton(BuildContext context) {
   );
 }
 
-Future<void> manualdialog(
+Future<void> normaldialog(
     BuildContext context, String title, String message) async {
   showDialog(
       context: context,

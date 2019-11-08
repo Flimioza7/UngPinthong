@@ -5,7 +5,7 @@ class MyStyle {
   Color textColor = Colors.red[900];
   Color mainColor = Colors.green[400];
   String nameFont = 'YeonSung';
-  String nameApp = 'Ung Pinthong';
+  String nameApp = 'Film Living';
 
   EdgeInsetsGeometry myPadding = EdgeInsets.all(16.0);
 
